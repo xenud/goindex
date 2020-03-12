@@ -356,7 +356,7 @@ function utc2beijing(utc_datetime) {
     // Aggiungi 8 ore, l'ora di Pechino è otto più fusi orari rispetto all'ora UTC
     //var unixtimestamp = timestamp+8*60*60;
     // Aggiungi un'ora, l'ora di Roma è UTC+1
-    var unixtimestamp = timestamp+7*60*60;
+    var unixtimestamp = timestamp+1*60*60;
 
     // Data e ora
     var unixtimestamp = new Date(unixtimestamp*1000);
