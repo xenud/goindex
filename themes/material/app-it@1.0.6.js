@@ -1,10 +1,9 @@
-// 在head 中 加载 必要静态
 document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
-// markdown支持
+// Markdown
 document.write('<script src="//cdn.jsdelivr.net/npm/markdown-it@10.0.0/dist/markdown-it.min.js"></script>');
 document.write('<style>.mdui-appbar .mdui-toolbar{height:56px;font-size:1pc}.mdui-toolbar>*{padding:0 6px;margin:0 2px}.mdui-toolbar>i{opacity:.5}.mdui-toolbar>.mdui-typo-headline{padding:0 1pc 0 0}.mdui-toolbar>i{padding:0}.mdui-toolbar>a:hover,a.active,a.mdui-typo-headline{opacity:1}.mdui-container{max-width:980px}.mdui-list-item{transition:none}.mdui-list>.th{background-color:initial}.mdui-list-item>a{width:100%;line-height:3pc}.mdui-list-item{margin:2px 0;padding:0}.mdui-toolbar>a:last-child{opacity:1}@media screen and (max-width:980px){.mdui-list-item .mdui-text-right{display:none}.mdui-container{width:100%!important;margin:0}.mdui-toolbar>.mdui-typo-headline,.mdui-toolbar>a:last-child,.mdui-toolbar>i:first-child{display:block}}</style>');
 
-// 初始化页面，并载入必要资源
+// Inizializza la pagina e carica le risorse necessarie
 function init(){
     document.siteName = $('title').html();
     $('body').addClass("mdui-theme-primary-blue-grey mdui-theme-accent-blue");
@@ -33,13 +32,13 @@ function render(path){
 }
 
 
-// 渲染 title
+// Imposta titolo
 function title(path){
     path = decodeURI(path);
     $('title').html(document.siteName+' - '+path);
 }
 
-// 渲染导航栏
+// Renderizza la barra di navigazione
 function nav(path){
     var html = "";
     html += `<a href="/" class="mdui-typo-headline folder">${document.siteName}</a>`;
@@ -59,7 +58,7 @@ function nav(path){
     $('#nav').html(html);
 }
 
-// 渲染文件列表
+// Rendering dell'elenco dei file
 function list(path){
 	var content = `
 	<div id="head_md" class="mdui-typo" style="display:none;padding: 20px 0;"></div>
@@ -68,15 +67,15 @@ function list(path){
 	  <ul class="mdui-list"> 
 	   <li class="mdui-list-item th"> 
 	    <div class="mdui-col-xs-12 mdui-col-sm-7">
-	     文件
+	     Files
 	<i class="mdui-icon material-icons icon-sort" data-sort="name" data-order="more">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-3 mdui-text-right">
-	     修改时间
+	     Data ultima modifica
 	<i class="mdui-icon material-icons icon-sort" data-sort="date" data-order="downward">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-2 mdui-text-right">
-	     大小
+	     Dimensione
 	<i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i>
 	    </div> 
 	    </li> 
@@ -97,7 +96,7 @@ function list(path){
     $.post(path,'{"password":"'+password+'"}', function(data,status){
         var obj = jQuery.parseJSON(data);
         if(typeof obj != 'null' && obj.hasOwnProperty('error') && obj.error.code == '401'){
-            var pass = prompt("目录加密, 请输入密码","");
+            var pass = prompt("Per favore inserire la password","");
             localStorage.setItem('password'+path, pass);
             if(pass != null && pass != ""){
                 list(path);
@@ -179,7 +178,7 @@ function get_file(path, file, callback){
 
 
 
-// 文件展示 ?a=view
+// Visualizzazione file ?a=view
 function file(path){
 	var name = path.split('/').pop();
 	var ext = name.split('.').pop().toLowerCase().replace(`?a=view`,"");
@@ -204,7 +203,7 @@ function file(path){
 	}
 }
 
-// 文件展示 |html|php|css|go|java|js|json|txt|sh|md|
+// Visualizzazione file |html|php|css|go|java|js|json|txt|sh|md|
 function file_code(path){
 	var type = {
 		"html":"html",
@@ -226,7 +225,7 @@ function file_code(path){
 <pre id="editor" ></pre>
 </div>
 <div class="mdui-textfield">
-	<label class="mdui-textfield-label">下载地址</label>
+	<label class="mdui-textfield-label">Download</label>
 	<input class="mdui-textfield-input" type="text" value="${href}"/>
 </div>
 <a href="${href}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
@@ -257,12 +256,12 @@ function file_code(path){
 	});
 }
 
-// 文件展示 视频 |mp4|webm|avi|
+// Video |mp4|webm|avi|
 function file_video(path){
 	var url = window.location.origin + path;
-	var playBtn = `<a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="potplayer://${url}"><i class="mdui-icon material-icons">&#xe038;</i>在 potplayer 中播放</a>`;
-	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端
-	    playBtn = `	<a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="intent:${url}#Intent;package=com.mxtech.videoplayer.ad;S.title=${path};end"><i class="mdui-icon material-icons">&#xe039;</i>在mxplayer中播放</a>`;
+	var playBtn = `<a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="potplayer://${url}"><i class="mdui-icon material-icons">&#xe038;</i>Vedi con PotPlayer</a>`;
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //Per dispositivi mobili
+	    playBtn = `	<a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="intent:${url}#Intent;package=com.mxtech.videoplayer.ad;S.title=${path};end"><i class="mdui-icon material-icons">&#xe039;</i>Vedi con MX Player</a>`;
 	}
 	var content = `
 <div class="mdui-container-fluid">
@@ -271,13 +270,13 @@ function file_video(path){
 	  <source src="${url}" type="video/mp4">
 	</video>
 	<br>${playBtn}
-	<!-- 固定标签 -->
+	<!-- Etichetta fissa -->
 	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">下载地址</label>
+	  <label class="mdui-textfield-label">Download</label>
 	  <input class="mdui-textfield-input" type="text" value="${url}"/>
 	</div>
 	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">HTML 引用地址</label>
+	  <label class="mdui-textfield-label">Riproduzione HTML</label>
 	  <textarea class="mdui-textfield-input"><video><source src="${url}" type="video/mp4"></video></textarea>
 	</div>
 </div>
@@ -286,7 +285,7 @@ function file_video(path){
 	$('#content').html(content);
 }
 
-// 文件展示 音频 |mp3|m4a|wav|ogg|
+// Audio |mp3|m4a|wav|ogg|
 function file_audio(path){
 	var url = window.location.origin + path;
 	var content = `
@@ -296,13 +295,13 @@ function file_audio(path){
 	  <source src="${url}"">
 	</audio>
 	<br>
-	<!-- 固定标签 -->
+	<!-- Etichetta fissa -->
 	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">下载地址</label>
+	  <label class="mdui-textfield-label">Download</label>
 	  <input class="mdui-textfield-input" type="text" value="${url}"/>
 	</div>
 	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">HTML 引用地址</label>
+	  <label class="mdui-textfield-label">Riproduzione HTML</label>
 	  <textarea class="mdui-textfield-input"><audio><source src="${url}"></audio></textarea>
 	</div>
 </div>
@@ -312,7 +311,7 @@ function file_audio(path){
 }
 
 
-// 图片展示
+// Foto
 function file_image(path){
 	var url = window.location.origin + path;
 	var content = `
@@ -321,15 +320,15 @@ function file_image(path){
 	<img class="mdui-img-fluid" src="${url}"/>
 	<br>
 	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">下载地址</label>
+	  <label class="mdui-textfield-label">Download</label>
 	  <input class="mdui-textfield-input" type="text" value="${url}"/>
 	</div>
 	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">HTML 引用</label>
+	  <label class="mdui-textfield-label">Embed HTML</label>
 	  <input class="mdui-textfield-input" type="text" value="<img src='${url}' />"/>
 	</div>
         <div class="mdui-textfield">
-	  <label class="mdui-textfield-label">Markdown 引用地址</label>
+	  <label class="mdui-textfield-label">Embed Markdown</label>
 	  <input class="mdui-textfield-input" type="text" value="![](${url})"/>
 	</div>
         <br>
@@ -340,24 +339,24 @@ function file_image(path){
 }
 
 
-//时间转换
+//Conversione del tempo
 function utc2beijing(utc_datetime) {
-    // 转为正常的时间格式 年-月-日 时:分:秒
+    // passa al formato orario normale anno-mese-giorno ora:minuti:secondi
     var T_pos = utc_datetime.indexOf('T');
     var Z_pos = utc_datetime.indexOf('Z');
     var year_month_day = utc_datetime.substr(0,T_pos);
     var hour_minute_second = utc_datetime.substr(T_pos+1,Z_pos-T_pos-1);
     var new_datetime = year_month_day+" "+hour_minute_second; // 2017-03-31 08:02:06
 
-    // 处理成为时间戳
+    // L'elaborazione diventa data/ora
     timestamp = new Date(Date.parse(new_datetime));
     timestamp = timestamp.getTime();
     timestamp = timestamp/1000;
 
-    // 增加8个小时，北京时间比utc时间多八个时区
+    // Aggiungi 8 ore, l'ora di Pechino è otto più fusi orari rispetto all'ora UTC
     var unixtimestamp = timestamp+8*60*60;
 
-    // 时间戳转为时间
+    // Data e ora
     var unixtimestamp = new Date(unixtimestamp*1000);
     var year = 1900 + unixtimestamp.getYear();
     var month = "0" + (unixtimestamp.getMonth() + 1);
@@ -371,7 +370,7 @@ function utc2beijing(utc_datetime) {
         + second.substring(second.length-2, second.length);
 }
 
-// bytes自适应转换到KB,MB,GB
+// Conversione dei byte in KB, MB, GB
 function formatFileSize(bytes) {
     if (bytes>=1000000000) {bytes=(bytes/1000000000).toFixed(2)+' GB';}
     else if (bytes>=1000000)    {bytes=(bytes/1000000).toFixed(2)+' MB';}
@@ -390,7 +389,7 @@ String.prototype.trim = function (char) {
 };
 
 
-// README.md HEAD.md 支持
+// README.md HEAD.md
 function markdown(el, data){
     if(window.md == undefined){
         //$.getScript('https://cdn.jsdelivr.net/npm/markdown-it@10.0.0/dist/markdown-it.min.js',function(){
@@ -403,7 +402,6 @@ function markdown(el, data){
     }
 }
 
-// 监听回退事件
 window.onpopstate = function(){
     var path = window.location.pathname;
     render(path);
