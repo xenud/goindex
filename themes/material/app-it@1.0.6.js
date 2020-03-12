@@ -353,9 +353,6 @@ function utc2beijing(utc_datetime) {
     timestamp = timestamp.getTime();
     timestamp = timestamp/1000;
 
-    // Aggiungi 8 ore, l'ora di Pechino è otto più fusi orari rispetto all'ora UTC
-    var unixtimestamp = timestamp+8*60*60;
-
     // Data e ora
     var unixtimestamp = new Date(unixtimestamp*1000);
     var year = 1900 + unixtimestamp.getYear();
