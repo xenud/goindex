@@ -6,7 +6,7 @@ document.write('<style>.mdui-appbar .mdui-toolbar{height:56px;font-size:1pc}.mdu
 // Inizializza la pagina e carica le risorse necessarie
 function init(){
     document.siteName = $('title').html();
-    $('body').addClass("mdui-theme-primary-blue-grey mdui-theme-accent-blue");
+    $('body').addClass("mdui-theme-primary-indigo mdui-theme-accent-blue");
     var html = `
 <header class="mdui-appbar mdui-color-theme"> 
    <div id="nav" class="mdui-toolbar mdui-container"> 
@@ -352,11 +352,9 @@ function utc2beijing(utc_datetime) {
     timestamp = new Date(Date.parse(new_datetime));
     timestamp = timestamp.getTime();
     timestamp = timestamp/1000;
-	
+
     // Aggiungi 8 ore, l'ora di Pechino è otto più fusi orari rispetto all'ora UTC
-    //var unixtimestamp = timestamp+8*60*60;
-    // Aggiungi un'ora, l'ora di Roma è UTC+1
-    var unixtimestamp = timestamp+1*60*60;
+    var unixtimestamp = timestamp+8*60*60;
 
     // Data e ora
     var unixtimestamp = new Date(unixtimestamp*1000);
